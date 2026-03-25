@@ -67,15 +67,63 @@ class AdminHandler(SimpleHTTPRequestHandler):
                 
                 if ',' in b64str:
                     b64str = b64str.split(',')[1]
-                    
-                file_path = IMG_DIR / filename
+
+                raw_bytes = base64.b64decode(b64str)
+
+                # ── Comprimir a WebP automáticamente ──────────────────────────
+                try:
+                    from PIL import Image
+                    import io
+
+                    MAX_WIDTH = 1200
+                    WEBP_QUALITY = 82
+
+                    img = Image.open(io.BytesIO(raw_bytes))
+
+                    # Convertir a RGB (elimina canal alpha y modos especiales)
+                    if img.mode in ("RGBA", "P", "LA"):
+                        background = Image.new("RGB", img.size, (255, 255, 255))
+                        if img.mode == "P":
+                            img = img.convert("RGBA")
+                        mask = img.split()[-1] if img.mode in ("RGBA", "LA") else None
+                        background.paste(img, mask=mask)
+                        img = background
+                    elif img.mode != "RGB":
+                        img = img.convert("RGB")
+
+                    # Redimensionar si es demasiado ancha
+                    if img.width > MAX_WIDTH:
+                        ratio = MAX_WIDTH / img.width
+                        img = img.resize((MAX_WIDTH, int(img.height * ratio)), Image.LANCZOS)
+
+                    # Forzar extensión .webp en el nombre
+                    stem = Path(filename).stem
+                    final_name = stem + ".webp"
+                    file_path = IMG_DIR / final_name
+
+                    out_buffer = io.BytesIO()
+                    img.save(out_buffer, "WEBP", quality=WEBP_QUALITY, method=6)
+                    file_bytes = out_buffer.getvalue()
+
+                except Exception as pil_err:
+                    # Si Pillow falla por algún motivo, guarda el original sin comprimir
+                    print(f"[WARN] Compresión WebP falló ({pil_err}), guardando original.")
+                    final_name = filename
+                    file_path = IMG_DIR / final_name
+                    file_bytes = raw_bytes
+                # ──────────────────────────────────────────────────────────────
+
                 with open(file_path, 'wb') as f:
-                    f.write(base64.b64decode(b64str))
-                
+                    f.write(file_bytes)
+
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
                 self.end_headers()
-                self.wfile.write(json.dumps({"status": "success", "filepath": f"img/{filename}"}).encode('utf-8'))
+                self.wfile.write(json.dumps({
+                    "status": "success",
+                    "filepath": f"img/{final_name}"
+                }).encode('utf-8'))
+
             else:
                 self.send_error(404, "Not Found")
                 

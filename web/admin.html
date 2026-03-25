@@ -131,8 +131,8 @@
                     photosHtml += '</ul>';
                     photosHtml += `
                         <label class="file-upload-lbl">
-                            📄 Subir Foto
-                            <input type="file" accept="image/png, image/jpeg" onchange="uploadImage(event, ${globalIndex})">
+                            📷 Subir Foto
+                            <input type="file" accept="image/*" capture="environment" onchange="uploadImage(event, ${globalIndex})">
                         </label>
                     `;
 
@@ -207,7 +207,8 @@
             if(!file) return;
 
             const label = event.target.parentElement;
-            label.innerText = "⏳ Subiendo...";
+            label.innerHTML = "⏳ Comprimiendo...";
+            label.style.pointerEvents = 'none';
 
             const reader = new FileReader();
             reader.onload = function(e) {
