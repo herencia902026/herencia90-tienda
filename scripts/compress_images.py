@@ -43,16 +43,14 @@ def compress_all():
 
         try:
             with Image.open(img_path) as img:
-                # Convertir a RGB si tiene canal alpha (PNG con transparencia)
-                if img.mode in ("RGBA", "P", "LA"):
-                    # Crear fondo blanco para imágenes con transparencia
-                    background = Image.new("RGB", img.size, (255, 255, 255))
-                    if img.mode == "P":
-                        img = img.convert("RGBA")
-                    background.paste(img, mask=img.split()[-1] if img.mode in ("RGBA", "LA") else None)
-                    img = background
-                elif img.mode != "RGB":
+                # Normalizar modo: preservar transparencia si la imagen la tiene
+                if img.mode == "P":
+                    img = img.convert("RGBA")  # Paleta → RGBA para preservar transparencia
+                elif img.mode == "LA":
+                    img = img.convert("RGBA")
+                elif img.mode not in ("RGB", "RGBA"):
                     img = img.convert("RGB")
+                # RGB y RGBA se dejan tal cual → WebP preserva la transparencia de RGBA
 
                 # Redimensionar si es más ancha que MAX_WIDTH
                 if img.width > MAX_WIDTH:

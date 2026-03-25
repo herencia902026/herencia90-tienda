@@ -80,16 +80,14 @@ class AdminHandler(SimpleHTTPRequestHandler):
 
                     img = Image.open(io.BytesIO(raw_bytes))
 
-                    # Convertir a RGB (elimina canal alpha y modos especiales)
-                    if img.mode in ("RGBA", "P", "LA"):
-                        background = Image.new("RGB", img.size, (255, 255, 255))
-                        if img.mode == "P":
-                            img = img.convert("RGBA")
-                        mask = img.split()[-1] if img.mode in ("RGBA", "LA") else None
-                        background.paste(img, mask=mask)
-                        img = background
-                    elif img.mode != "RGB":
+                    # Normalizar modo: preservar transparencia si existe
+                    if img.mode == "P":
+                        img = img.convert("RGBA")  # Paleta → RGBA
+                    elif img.mode == "LA":
+                        img = img.convert("RGBA")
+                    elif img.mode not in ("RGB", "RGBA"):
                         img = img.convert("RGB")
+                    # RGB y RGBA se dejan tal cual → WebP preserva la transparencia de RGBA
 
                     # Redimensionar si es demasiado ancha
                     if img.width > MAX_WIDTH:
