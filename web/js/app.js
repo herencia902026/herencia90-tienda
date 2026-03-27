@@ -1,5 +1,132 @@
 let allProducts = [];
 
+// ── Carrito de compras ────────────────────────────────────────────────────────
+let cart = JSON.parse(localStorage.getItem('herencia90_cart') || '[]');
+
+function saveCart() {
+    localStorage.setItem('herencia90_cart', JSON.stringify(cart));
+    updateCartBadge();
+}
+
+function updateCartBadge() {
+    const badge = document.getElementById('cartBadge');
+    const total = cart.reduce((sum, item) => sum + item.cantidad, 0);
+    if (total > 0) {
+        badge.textContent = total;
+        badge.style.display = 'flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+function addToCart(product, size) {
+    const existing = cart.find(item => item.id === product.id && item.talla === size);
+    if (existing) {
+        existing.cantidad++;
+    } else {
+        const imagen = toWebp(
+            (product.imagenes && product.imagenes.length > 0)
+                ? product.imagenes[0]
+                : (product.imagen || '')
+        );
+        cart.push({ id: product.id, equipo: product.equipo, talla: size, precio: product.precio, imagen, cantidad: 1 });
+    }
+    saveCart();
+    showToast();
+}
+
+function removeFromCart(id, talla) {
+    cart = cart.filter(item => !(item.id === id && item.talla === talla));
+    saveCart();
+    renderCartDrawer();
+}
+
+function changeQty(id, talla, delta) {
+    const item = cart.find(i => i.id === id && i.talla === talla);
+    if (!item) return;
+    item.cantidad = Math.max(1, item.cantidad + delta);
+    saveCart();
+    renderCartDrawer();
+}
+
+function clearCart() {
+    cart = [];
+    saveCart();
+    renderCartDrawer();
+}
+
+function openCart() {
+    renderCartDrawer();
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('open');
+}
+
+function closeCart() {
+    document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('open');
+}
+
+function renderCartDrawer() {
+    const container = document.getElementById('cartItems');
+    const footer = document.getElementById('cartFooter');
+
+    if (cart.length === 0) {
+        container.innerHTML = `
+            <div class="cart-empty">
+                <div class="cart-empty-icon">🛒</div>
+                <p>Tu carrito está vacío</p>
+                <p>¡Agrega tus camisetas favoritas!</p>
+            </div>`;
+        footer.style.display = 'none';
+        return;
+    }
+
+    footer.style.display = 'flex';
+    let total = 0;
+
+    container.innerHTML = cart.map(item => {
+        total += item.precio * item.cantidad;
+        return `
+            <div class="cart-item">
+                <img src="${item.imagen}" alt="${item.equipo}" class="cart-item-img" onerror="this.style.opacity='0.3'">
+                <div class="cart-item-info">
+                    <p class="cart-item-name">${item.equipo}</p>
+                    <p class="cart-item-talla">Talla: ${item.talla}</p>
+                    <p class="cart-item-price">${formatPrice(item.precio * item.cantidad)}</p>
+                    <div class="cart-item-qty">
+                        <button onclick="changeQty(${item.id}, '${item.talla}', -1)">−</button>
+                        <span>${item.cantidad}</span>
+                        <button onclick="changeQty(${item.id}, '${item.talla}', 1)">+</button>
+                    </div>
+                </div>
+                <button class="cart-item-remove" onclick="removeFromCart(${item.id}, '${item.talla}')" title="Quitar">×</button>
+            </div>`;
+    }).join('');
+
+    document.getElementById('cartTotal').textContent = formatPrice(total);
+}
+
+function checkoutWhatsApp() {
+    if (cart.length === 0) return;
+
+    let msg = '¡Hola Herencia 90! Quiero hacer el siguiente pedido:\n\n';
+    cart.forEach((item, i) => {
+        msg += `${i + 1}. ${item.equipo}\n   Talla: ${item.talla}  ×${item.cantidad}  →  ${formatPrice(item.precio * item.cantidad)}\n`;
+    });
+    const total = cart.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+    msg += `\n💰 *Total: ${formatPrice(total)}*\n\nPor favor confirmar disponibilidad y forma de pago 🙏`;
+
+    window.open(`https://wa.me/573183867147?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+let toastTimer = null;
+function showToast() {
+    const toast = document.getElementById('cartToast');
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
 // ── Intersection Observer para lazy loading real ─────────────────────────────
 const imgObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -30,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const modal = document.getElementById('productModal');
     const closeBtn = document.getElementById('closeModal');
-    
+
     closeBtn.onclick = () => { modal.style.display = "none"; }
     window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; }
 
@@ -43,6 +170,16 @@ document.addEventListener('DOMContentLoaded', () => {
             renderProducts(filtered);
         });
     }
+
+    // Cart event listeners
+    document.getElementById('cartBtn').onclick = openCart;
+    document.getElementById('cartClose').onclick = closeCart;
+    document.getElementById('cartOverlay').onclick = closeCart;
+    document.getElementById('cartCheckout').onclick = checkoutWhatsApp;
+    document.getElementById('cartClear').onclick = clearCart;
+
+    // Init badge on load
+    updateCartBadge();
 });
 
 function formatPrice(price) {
@@ -103,7 +240,6 @@ function renderProducts(products) {
             coverImg = toWebp(coverImg);
 
             const tallas = Object.entries(product.tallas || {});
-            const hasStock = tallas.some(([_, qty]) => qty > 0);
             const sizesStr = tallas.map(([s, qty]) =>
                 qty > 0 ? s : `<span style="text-decoration:line-through;opacity:0.4">${s}</span>`
             ).join(' · ');
@@ -171,12 +307,17 @@ function openModal(productIndex) {
     const sizeContainer = document.getElementById('sizeButtons');
     sizeContainer.innerHTML = '';
     const wsBtn = document.getElementById('modalWsBtn');
+    const addCartBtn = document.getElementById('modalAddCartBtn');
+
+    // Reset buttons
     wsBtn.style.pointerEvents = 'none';
     wsBtn.style.opacity = '0.5';
     wsBtn.innerHTML = `
         <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.233-.002.332-.002c.099-.001.233-.037.363.275.13.312.443 1.08.482 1.159.039.079.065.171.017.266-.048.096-.073.155-.138.229-.065.074-.136.162-.195.226-.065.069-.133.143-.058.272.075.129.333.551.713.889.49.438.905.576 1.033.64.128.064.204.053.28-.032.076-.085.328-.376.415-.506.087-.13.174-.108.291-.064.117.044.743.349.871.413.128.064.212.096.242.148.03.052.03.303-.114.708zM12 2C6.477 2 2 6.477 2 12c0 1.758.455 3.425 1.29 4.903L2 22l5.226-1.213C8.68 21.554 10.312 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
         Selecciona una talla
     `;
+    addCartBtn.style.display = 'none';
+    addCartBtn.onclick = null;
 
     const tallas = Object.entries(product.tallas || {});
     tallas.forEach(([size, stock]) => {
@@ -190,6 +331,8 @@ function openModal(productIndex) {
             btn.onclick = () => {
                 Array.from(sizeContainer.children).forEach(c => c.classList.remove('selected'));
                 btn.classList.add('selected');
+
+                // Activar botón "Comprar ahora"
                 const msg = encodeURIComponent(`Hola Herencia 90, me interesa comprar la camiseta: ${product.equipo} en Talla ${size}.`);
                 wsBtn.href = `https://wa.me/573183867147?text=${msg}`;
                 wsBtn.style.pointerEvents = 'auto';
@@ -198,6 +341,13 @@ function openModal(productIndex) {
                     <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.233-.002.332-.002c.099-.001.233-.037.363.275.13.312.443 1.08.482 1.159.039.079.065.171.017.266-.048.096-.073.155-.138.229-.065.074-.136.162-.195.226-.065.069-.133.143-.058.272.075.129.333.551.713.889.49.438.905.576 1.033.64.128.064.204.053.28-.032.076-.085.328-.376.415-.506.087-.13.174-.108.291-.064.117.044.743.349.871.413.128.064.212.096.242.148.03.052.03.303-.114.708zM12 2C6.477 2 2 6.477 2 12c0 1.758.455 3.425 1.29 4.903L2 22l5.226-1.213C8.68 21.554 10.312 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
                     Comprar Talla ${size}
                 `;
+
+                // Activar botón "Agregar al carrito"
+                addCartBtn.style.display = 'inline-flex';
+                addCartBtn.onclick = () => {
+                    addToCart(product, size);
+                    document.getElementById('productModal').style.display = 'none';
+                };
             };
         }
         sizeContainer.appendChild(btn);
