@@ -1,6 +1,6 @@
 let allProducts = [];
 
-// ── Carrito de compras ────────────────────────────────────────────────────────
+// ── Carrito ───────────────────────────────────────────────────────────────────
 let cart = JSON.parse(localStorage.getItem('herencia90_cart') || '[]');
 
 function saveCart() {
@@ -9,26 +9,28 @@ function saveCart() {
 }
 
 function updateCartBadge() {
+    const total = cart.reduce((sum, i) => sum + i.cantidad, 0);
+    // Desktop badge
     const badge = document.getElementById('cartBadge');
-    const total = cart.reduce((sum, item) => sum + item.cantidad, 0);
-    if (total > 0) {
+    if (badge) {
         badge.textContent = total;
-        badge.style.display = 'flex';
-    } else {
-        badge.style.display = 'none';
+        badge.style.display = total > 0 ? 'flex' : 'none';
+    }
+    // Mobile badge
+    const badgeMobile = document.getElementById('cartBadgeMobile');
+    if (badgeMobile) {
+        badgeMobile.textContent = total;
+        badgeMobile.style.display = total > 0 ? 'flex' : 'none';
     }
 }
 
 function addToCart(product, size) {
-    const existing = cart.find(item => item.id === product.id && item.talla === size);
+    const existing = cart.find(i => i.id === product.id && i.talla === size);
     if (existing) {
         existing.cantidad++;
     } else {
-        const imagen = toWebp(
-            (product.imagenes && product.imagenes.length > 0)
-                ? product.imagenes[0]
-                : (product.imagen || '')
-        );
+        const imagen = toWebp((product.imagenes && product.imagenes.length > 0)
+            ? product.imagenes[0] : (product.imagen || ''));
         cart.push({ id: product.id, equipo: product.equipo, talla: size, precio: product.precio, imagen, cantidad: 1 });
     }
     saveCart();
@@ -36,7 +38,7 @@ function addToCart(product, size) {
 }
 
 function removeFromCart(id, talla) {
-    cart = cart.filter(item => !(item.id === id && item.talla === talla));
+    cart = cart.filter(i => !(i.id === id && i.talla === talla));
     saveCart();
     renderCartDrawer();
 }
@@ -69,7 +71,6 @@ function closeCart() {
 function renderCartDrawer() {
     const container = document.getElementById('cartItems');
     const footer = document.getElementById('cartFooter');
-
     if (cart.length === 0) {
         container.innerHTML = `
             <div class="cart-empty">
@@ -80,10 +81,8 @@ function renderCartDrawer() {
         footer.style.display = 'none';
         return;
     }
-
     footer.style.display = 'flex';
     let total = 0;
-
     container.innerHTML = cart.map(item => {
         total += item.precio * item.cantidad;
         return `
@@ -102,20 +101,17 @@ function renderCartDrawer() {
                 <button class="cart-item-remove" onclick="removeFromCart(${item.id}, '${item.talla}')" title="Quitar">×</button>
             </div>`;
     }).join('');
-
     document.getElementById('cartTotal').textContent = formatPrice(total);
 }
 
 function checkoutWhatsApp() {
     if (cart.length === 0) return;
-
     let msg = '¡Hola Herencia 90! Quiero hacer el siguiente pedido:\n\n';
     cart.forEach((item, i) => {
         msg += `${i + 1}. ${item.equipo}\n   Talla: ${item.talla}  ×${item.cantidad}  →  ${formatPrice(item.precio * item.cantidad)}\n`;
     });
-    const total = cart.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+    const total = cart.reduce((sum, i) => sum + i.precio * i.cantidad, 0);
     msg += `\n💰 *Total: ${formatPrice(total)}*\n\nPor favor confirmar disponibilidad y forma de pago 🙏`;
-
     window.open(`https://wa.me/573183867147?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
@@ -127,136 +123,190 @@ function showToast() {
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
 }
 
-// ── Intersection Observer para lazy loading real ─────────────────────────────
+// ── Lazy loading ──────────────────────────────────────────────────────────────
 const imgObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.onload = () => {
-                img.classList.add('loaded');
-                img.parentElement.classList.remove('img-loading');
-            };
-            img.onerror = () => {
-                img.classList.add('loaded'); // ocultar skeleton aunque falle
-                img.parentElement.classList.remove('img-loading');
-            };
-            imgObserver.unobserve(img);
-        }
+        if (!entry.isIntersecting) return;
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.onload  = () => { img.classList.add('loaded'); img.parentElement.classList.remove('img-loading'); };
+        img.onerror = () => { img.classList.add('loaded'); img.parentElement.classList.remove('img-loading'); };
+        imgObserver.unobserve(img);
     });
-}, { rootMargin: '200px' }); // Pre-carga 200px antes de que entre al viewport
+}, { rootMargin: '200px' });
 
+// ── Grid toggle ───────────────────────────────────────────────────────────────
+function toggleGrid() {
+    const isSingle = document.body.classList.toggle('grid-single');
+    const icon2 = document.getElementById('iconGrid2');
+    const icon1 = document.getElementById('iconGrid1');
+    if (icon2 && icon1) {
+        icon2.style.display = isSingle ? 'none' : 'block';
+        icon1.style.display = isSingle ? 'block' : 'none';
+    }
+}
+
+// ── Category drawer ───────────────────────────────────────────────────────────
+function openDrawer() {
+    document.getElementById('categoryDrawer').classList.add('open');
+    document.getElementById('drawerOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+    document.getElementById('categoryDrawer').classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// ── Search overlay ────────────────────────────────────────────────────────────
+function openSearchOverlay() {
+    document.getElementById('searchOverlay').classList.add('open');
+    setTimeout(() => document.getElementById('mobileSearchInput').focus(), 300);
+}
+
+function closeSearchOverlay() {
+    document.getElementById('searchOverlay').classList.remove('open');
+    document.getElementById('mobileSearchInput').value = '';
+    renderProducts(allProducts);
+}
+
+// ── DOM Ready ─────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     fetch('productos.json')
-        .then(response => response.json())
+        .then(r => r.json())
         .then(data => {
             allProducts = data;
             renderProducts(allProducts);
         })
-        .catch(error => console.error('Error loading products:', error));
+        .catch(err => console.error('Error loading products:', err));
 
+    // Modal close
     const modal = document.getElementById('productModal');
-    const closeBtn = document.getElementById('closeModal');
+    document.getElementById('closeModal').onclick = () => { modal.style.display = 'none'; };
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
 
-    closeBtn.onclick = () => { modal.style.display = "none"; }
-    window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; }
-
-    // Imagen zoom manual
+    // Zoom en imagen principal
     const mainImgContainer = document.getElementById('mainImageContainer');
     const mainImg = document.getElementById('mainImage');
     if (mainImgContainer && mainImg) {
         mainImgContainer.addEventListener('mousemove', (e) => {
             const rect = mainImgContainer.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            mainImg.style.transformOrigin = `${(x / rect.width) * 100}% ${(y / rect.height) * 100}%`;
+            mainImg.style.transformOrigin = `${((e.clientX - rect.left) / rect.width) * 100}% ${((e.clientY - rect.top) / rect.height) * 100}%`;
         });
-        mainImgContainer.addEventListener('mouseenter', () => {
-            mainImg.classList.add('zoomed');
-        });
+        mainImgContainer.addEventListener('mouseenter', () => mainImg.classList.add('zoomed'));
         mainImgContainer.addEventListener('mouseleave', () => {
             mainImg.classList.remove('zoomed');
             setTimeout(() => { if (!mainImg.classList.contains('zoomed')) mainImg.style.transformOrigin = 'center center'; }, 150);
         });
     }
 
-    // Search logic
+    // Desktop search
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filtered = allProducts.filter(p => p.equipo.toLowerCase().includes(query));
-            renderProducts(filtered);
+            const q = e.target.value.toLowerCase();
+            renderProducts(q ? allProducts.filter(p => p.equipo.toLowerCase().includes(q)) : allProducts);
         });
     }
 
-    // Cart event listeners
+    // Mobile search
+    const mobileSearchInput = document.getElementById('mobileSearchInput');
+    if (mobileSearchInput) {
+        mobileSearchInput.addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase();
+            renderProducts(q ? allProducts.filter(p => p.equipo.toLowerCase().includes(q)) : allProducts);
+        });
+    }
+
+    // Desktop cart
     document.getElementById('cartBtn').onclick = openCart;
     document.getElementById('cartClose').onclick = closeCart;
     document.getElementById('cartOverlay').onclick = closeCart;
     document.getElementById('cartCheckout').onclick = checkoutWhatsApp;
     document.getElementById('cartClear').onclick = clearCart;
 
-    // Init badge on load
+    // Mobile bottom nav
+    document.getElementById('mobileCartBtn').onclick = openCart;
+    document.getElementById('mobileMenuBtn').onclick = openDrawer;
+    document.getElementById('gridToggleBtn').onclick = toggleGrid;
+    document.getElementById('mobileSearchBtn').onclick = openSearchOverlay;
+
+    // Drawer & search close
+    document.getElementById('categoryDrawerClose').onclick = closeDrawer;
+    document.getElementById('drawerOverlay').onclick = closeDrawer;
+    document.getElementById('searchOverlayClose').onclick = closeSearchOverlay;
+
+    // Cerrar drawer al hacer click en un link
+    document.querySelectorAll('.category-drawer-link').forEach(link => {
+        link.addEventListener('click', () => {
+            closeDrawer();
+        });
+    });
+
+    // Cerrar búsqueda con Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeSearchOverlay();
+            closeDrawer();
+            modal.style.display = 'none';
+        }
+    });
+
     updateCartBadge();
 });
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
 function formatPrice(price) {
-    return new Intl.NumberFormat('es-CO', {
-        style: 'currency', currency: 'COP', minimumFractionDigits: 0
-    }).format(price);
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(price);
 }
 
-// Convierte un path de imagen a .webp si no lo es ya
 function toWebp(src) {
     if (!src) return src;
     return src.replace(/\.(png|jpg|jpeg)$/i, '.webp');
 }
 
+function makeCategoryId(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+$/, '');
+}
+
+// ── Render Products ───────────────────────────────────────────────────────────
 function renderProducts(products) {
     const container = document.getElementById('productGrid');
     container.innerHTML = '';
-    container.style.display = 'block';
 
     if (products.length === 0) {
-        container.innerHTML = '<p style="text-align:center; margin-top:50px;">No se encontraron resultados.</p>';
+        container.innerHTML = '<p style="text-align:center;margin-top:50px;color:#aaa;">No se encontraron resultados.</p>';
         return;
     }
 
-    const ORDER = ["Equipos Actuales", "Equipos Nacionales", "Retros", "Mujer"];
+    const ORDER = ['Clubes 25/26', 'Selecciones', 'Retros', 'Femenino'];
     const categories = {};
     ORDER.forEach(cat => categories[cat] = []);
 
-    products.forEach(product => {
-        const cat = product.categoria || "Equipos Actuales";
+    products.forEach(p => {
+        const cat = p.categoria || 'Clubes 25/26';
         if (!categories[cat]) categories[cat] = [];
-        categories[cat].push(product);
+        categories[cat].push(p);
     });
 
     for (const [catName, catProducts] of Object.entries(categories)) {
         if (catProducts.length === 0) continue;
 
         const catTitle = document.createElement('h2');
-        catTitle.id = catName.toLowerCase().replace(/\s+/g, '_');
+        catTitle.id = makeCategoryId(catName);
+        catTitle.className = 'category-title';
         catTitle.innerText = catName;
-        Object.assign(catTitle.style, {
-            marginTop: '40px', marginBottom: '20px', color: 'var(--gold)',
-            textTransform: 'uppercase', borderBottom: '1px solid #333',
-            paddingBottom: '10px', scrollMarginTop: '140px'
-        });
         container.appendChild(catTitle);
 
         const grid = document.createElement('div');
         grid.className = 'product-grid-inner';
         container.appendChild(grid);
 
-        catProducts.forEach((product) => {
+        catProducts.forEach(product => {
             const idx = allProducts.findIndex(p => p.id === product.id);
-
-            let coverImg = product.imagenes && product.imagenes.length > 0
-                ? product.imagenes[0]
-                : (product.imagen || "");
-            coverImg = toWebp(coverImg);
+            let coverImg = toWebp(product.imagenes && product.imagenes.length > 0
+                ? product.imagenes[0] : (product.imagen || ''));
 
             const tallas = Object.entries(product.tallas || {});
             const sizesStr = tallas.map(([s, qty]) =>
@@ -275,6 +325,7 @@ function renderProducts(products) {
                     <h3 class="product-title">${product.equipo}</h3>
                     <div class="product-price">${formatPrice(product.precio)}</div>
                     <div class="product-sizes">Tallas: ${sizesStr}</div>
+                    ${product.descripcion ? `<p class="product-description">${product.descripcion}</p>` : ''}
                     <button class="btn-whatsapp" style="margin-top:auto"
                         onclick="event.stopPropagation(); openModal(${idx})">
                         Ver Detalles
@@ -282,15 +333,13 @@ function renderProducts(products) {
                 </div>
             `;
 
-            // Registrar la imagen en el observer
-            const lazyImg = card.querySelector('.lazy-img');
-            imgObserver.observe(lazyImg);
-
+            imgObserver.observe(card.querySelector('.lazy-img'));
             grid.appendChild(card);
         });
     }
 }
 
+// ── Modal ─────────────────────────────────────────────────────────────────────
 function openModal(productIndex) {
     const product = allProducts[productIndex];
     if (!product) return;
@@ -299,22 +348,25 @@ function openModal(productIndex) {
     document.getElementById('modalTitle').innerText = product.equipo;
     document.getElementById('modalPrice').innerText = formatPrice(product.precio);
 
+    // Descripción
+    const descEl = document.getElementById('modalDescription');
+    descEl.textContent = product.descripcion || '';
+    descEl.style.display = product.descripcion ? 'block' : 'none';
+
     const mainImg = document.getElementById('mainImage');
     const thumbContainer = document.getElementById('thumbnailsContainer');
     thumbContainer.innerHTML = '';
 
-    let images = product.imagenes || (product.imagen ? [product.imagen] : []);
-    images = images.map(toWebp);
-
+    let images = (product.imagenes || (product.imagen ? [product.imagen] : [])).map(toWebp);
     if (images.length > 0) {
         mainImg.src = images[0];
-        images.forEach((imgSrc, i) => {
+        images.forEach((src, i) => {
             const thumb = document.createElement('img');
-            thumb.src = imgSrc;
+            thumb.src = src;
             thumb.className = i === 0 ? 'active' : '';
             thumb.loading = 'lazy';
             thumb.onclick = () => {
-                mainImg.src = imgSrc;
+                mainImg.src = src;
                 Array.from(thumbContainer.children).forEach(c => c.classList.remove('active'));
                 thumb.classList.add('active');
             };
@@ -322,55 +374,48 @@ function openModal(productIndex) {
         });
     }
 
-    // Sizes
+    // Tallas
     const sizeContainer = document.getElementById('sizeButtons');
     sizeContainer.innerHTML = '';
     const wsBtn = document.getElementById('modalWsBtn');
     const addCartBtn = document.getElementById('modalAddCartBtn');
 
-    // Reset buttons
     wsBtn.style.pointerEvents = 'none';
     wsBtn.style.opacity = '0.5';
     wsBtn.innerHTML = `
         <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.233-.002.332-.002c.099-.001.233-.037.363.275.13.312.443 1.08.482 1.159.039.079.065.171.017.266-.048.096-.073.155-.138.229-.065.074-.136.162-.195.226-.065.069-.133.143-.058.272.075.129.333.551.713.889.49.438.905.576 1.033.64.128.064.204.053.28-.032.076-.085.328-.376.415-.506.087-.13.174-.108.291-.064.117.044.743.349.871.413.128.064.212.096.242.148.03.052.03.303-.114.708zM12 2C6.477 2 2 6.477 2 12c0 1.758.455 3.425 1.29 4.903L2 22l5.226-1.213C8.68 21.554 10.312 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
-        Selecciona una talla
-    `;
+        Selecciona una talla`;
     addCartBtn.style.display = 'none';
     addCartBtn.onclick = null;
 
-    const tallas = Object.entries(product.tallas || {});
-    tallas.forEach(([size, stock]) => {
+    Object.entries(product.tallas || {}).forEach(([size, stock]) => {
         const btn = document.createElement('button');
         btn.innerText = size;
         if (stock <= 0) {
             btn.className = 'size-btn out-of-stock';
-            btn.title = "Agotada";
+            btn.title = 'Agotada';
         } else {
             btn.className = 'size-btn';
             btn.onclick = () => {
                 Array.from(sizeContainer.children).forEach(c => c.classList.remove('selected'));
                 btn.classList.add('selected');
-
-                // Activar botón "Comprar ahora"
                 const msg = encodeURIComponent(`Hola Herencia 90, me interesa comprar la camiseta: ${product.equipo} en Talla ${size}.`);
                 wsBtn.href = `https://wa.me/573183867147?text=${msg}`;
                 wsBtn.style.pointerEvents = 'auto';
                 wsBtn.style.opacity = '1';
+                wsBtn.className = 'btn-whatsapp green';
                 wsBtn.innerHTML = `
                     <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.233-.002.332-.002c.099-.001.233-.037.363.275.13.312.443 1.08.482 1.159.039.079.065.171.017.266-.048.096-.073.155-.138.229-.065.074-.136.162-.195.226-.065.069-.133.143-.058.272.075.129.333.551.713.889.49.438.905.576 1.033.64.128.064.204.053.28-.032.076-.085.328-.376.415-.506.087-.13.174-.108.291-.064.117.044.743.349.871.413.128.064.212.096.242.148.03.052.03.303-.114.708zM12 2C6.477 2 2 6.477 2 12c0 1.758.455 3.425 1.29 4.903L2 22l5.226-1.213C8.68 21.554 10.312 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
-                    Comprar Talla ${size}
-                `;
-
-                // Activar botón "Agregar al carrito"
+                    Comprar Talla ${size}`;
                 addCartBtn.style.display = 'inline-flex';
                 addCartBtn.onclick = () => {
                     addToCart(product, size);
-                    document.getElementById('productModal').style.display = 'none';
+                    modal.style.display = 'none';
                 };
             };
         }
         sizeContainer.appendChild(btn);
     });
 
-    modal.style.display = "block";
+    modal.style.display = 'block';
 }

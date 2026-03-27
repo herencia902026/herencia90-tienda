@@ -1,15 +1,11 @@
 [
     {
         "id": 1,
-        "categoria": "Equipos Nacionales",
+        "categoria": "Selecciones",
         "equipo": "ALEMANIA 2026 VERSION FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "descripcion": "Camiseta oficial de la Selección de Alemania para el Mundial 2026. Diseño blanco clásico con detalles en negro y el águila federal bordada. Versión Fan con tela transpirable y corte moderno.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/alemania_2026_version_fan_1.webp",
             "img/alemania_2026_version_fan_2.webp",
@@ -22,15 +18,11 @@
     },
     {
         "id": 2,
-        "categoria": "Equipos Actuales",
-        "equipo": "argnetina 2026 home fan",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "categoria": "Selecciones",
+        "equipo": "ARGENTINA 2026 HOME FAN",
+        "descripcion": "La camiseta más icónica del mundo en su versión 2026. Rayas celeste y blanco con detalles dorados en honor a los campeones del mundo. Versión Fan de alta calidad para los verdaderos hinchas de la Albiceleste.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/argnetina_2026_home_fan_1.webp",
             "img/argnetina_2026_home_fan_2.webp",
@@ -39,15 +31,11 @@
     },
     {
         "id": 3,
-        "categoria": "Equipos Actuales",
-        "equipo": "ARSENAL 25-25 BLANCA FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "ARSENAL 25-26 AWAY BLANCA FAN",
+        "descripcion": "Camiseta alternativa del Arsenal temporada 2025-26 en colorway blanco con detalles en rojo y dorado. Versión Fan de corte ajustado, ideal para coleccionistas de la Premier League y seguidores de los Gunners.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/arsenal_25-25_blanca_fan_1.webp",
             "img/arsenal_25-25_blanca_fan_2.webp",
@@ -61,15 +49,11 @@
     },
     {
         "id": 4,
-        "categoria": "Equipos Actuales",
+        "categoria": "Clubes 25/26",
         "equipo": "ARSENAL 25-26 HOME FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "descripcion": "Camiseta local del Arsenal para la temporada 2025-26. El rojo intenso de Emirates Stadium con detalles en blanco y el escudo de los Gunners. Versión Fan con tela ligera y transpirable.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/arsenal_25-26_home_fan_1.webp",
             "img/arsenal_25-26_home_fan_2.webp",
@@ -84,15 +68,11 @@
     },
     {
         "id": 5,
-        "categoria": "Equipos Actuales",
+        "categoria": "Clubes 25/26",
         "equipo": "BARCELONA 25-26 HOME FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 2,
-            "L": 1,
-            "XL": 0
-        },
+        "descripcion": "La nueva camiseta local del FC Barcelona temporada 2025-26 con los legendarios colores blaugrana. Franjas clásicas rediseñadas con toque moderno y escudo bordado. Versión Fan premium para los culers del mundo.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 2, "L": 1, "XL": 0 },
         "imagenes": [
             "img/barcelona_25-26_home_fan_1.webp",
             "img/barcelona_25-26_home_fan_2.webp",
@@ -106,15 +86,11 @@
     },
     {
         "id": 6,
-        "categoria": "Equipos Actuales",
-        "equipo": "BARCLONA 25-26 AWAY WHITE",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 2,
-            "L": 1,
-            "XL": 0
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "BARCELONA 25-26 AWAY WHITE FAN",
+        "descripcion": "Camiseta visitante del FC Barcelona 2025-26 en elegante colorway blanco con detalles dorados y blaugrana. La segunda equipación más exclusiva del Barça. Versión Fan de alta calidad.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 2, "L": 1, "XL": 0 },
         "imagenes": [
             "img/barclona_25-26_away_white_1.webp",
             "img/barclona_25-26_away_white_2.webp",
@@ -127,15 +103,11 @@
     },
     {
         "id": 7,
-        "categoria": "Equipos Actuales",
+        "categoria": "Clubes 25/26",
         "equipo": "BAYERN MUNICH 25-26 HOME FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 1
-        },
+        "descripcion": "La camiseta local del Bayern München temporada 2025-26 en el característico rojo bávaro con detalles en blanco. Diseño limpio y poderoso del gigante alemán. Versión Fan premium de los campeones de la Bundesliga.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 1 },
         "imagenes": [
             "img/bayern_munich_25-26_home_fan_1.webp",
             "img/bayern_munich_25-26_home_fan_2.webp",
@@ -149,15 +121,11 @@
     },
     {
         "id": 8,
-        "categoria": "Equipos Actuales",
-        "equipo": "BAYERN MUNICH 25-26 tercera negra FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 1
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "BAYERN MUNICH 25-26 TERCERA NEGRA FAN",
+        "descripcion": "Tercera equipación del Bayern München 2025-26 en negro elegante. Un diseño audaz y moderno que rompe con el clásico rojo bávaro. Edición limitada Versión Fan para los seguidores más atrevidos del gigante alemán.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 1 },
         "imagenes": [
             "img/bayern_munich_25-26_tercera_negra_fan_1.webp",
             "img/bayern_munich_25-26_tercera_negra_fan_2.webp",
@@ -169,15 +137,11 @@
     },
     {
         "id": 9,
-        "categoria": "Equipos Actuales",
+        "categoria": "Selecciones",
         "equipo": "BRASIL 2026 VERSION FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "descripcion": "La canarinha para el Mundial 2026. El icónico amarillo de Vinicius Jr. y Rodrygo con detalles verdes y el escudo de la CBF bordado. Para los hinchas de la Seleção que sueñan con el hexacampeonato.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/brasil_2026_version_fan_1.webp",
             "img/brasil_2026_version_fan_2.webp",
@@ -190,40 +154,27 @@
     },
     {
         "id": 10,
-        "categoria": "Equipos Nacionales",
+        "categoria": "Selecciones",
         "equipo": "COLOMBIA 2026",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 4,
-            "L": 4,
-            "XL": 0
-        },
+        "descripcion": "La tricolor en su versión mundialista 2026. El amarillo dorado de James, Díaz y Córdoba con los detalles azules y rojos que identifican a Los Cafeteros. Para los que creen en el sueño de la primera estrella.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 4, "L": 4, "XL": 0 },
         "imagenes": [
             "img/colombia_2026_1.webp",
             "img/colombia_2026_2.webp",
             "img/colombia_2026_3.webp",
             "img/colombia_2026_4.webp",
             "img/colombia_2026_5.webp",
-            "img/colombia_2026_6.webp",
-            "img/colombia_2026_mujer_fan_1.webp",
-            "img/colombia_2026_mujer_fan_2.webp",
-            "img/colombia_2026_mujer_fan_3.webp",
-            "img/colombia_2026_mujer_fan_4.webp",
-            "img/colombia_2026_mujer_fan_5.webp"
+            "img/colombia_2026_6.webp"
         ]
     },
     {
         "id": 24,
-        "categoria": "Mujer",
+        "categoria": "Femenino",
         "equipo": "COLOMBIA 2026 MUJER FAN",
-        "precio": 120000,
-        "tallas": {
-            "S": 5,
-            "M": 5,
-            "L": 5,
-            "XL": 5
-        },
+        "descripcion": "Camiseta de la Selección Colombia 2026 en corte femenino. Diseño ajustado con el icónico amarillo tricolor y silueta moderna. Para las hinchas que visten la pasión con estilo propio. Disponible en todas las tallas.",
+        "precio": 99000,
+        "tallas": { "S": 5, "M": 5, "L": 5, "XL": 5 },
         "imagenes": [
             "img/colombia_2026_mujer_fan_1.webp",
             "img/colombia_2026_mujer_fan_2.webp",
@@ -234,15 +185,11 @@
     },
     {
         "id": 11,
-        "categoria": "Equipos Actuales",
-        "equipo": "liverpool 25-26 home red fan",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "LIVERPOOL 25-26 HOME RED FAN",
+        "descripcion": "El rojo de Anfield para la temporada 2025-26. La camiseta local del Liverpool con el escudo del Liverbird y el espíritu de You'll Never Walk Alone. Versión Fan del equipo de Arne Slot.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/liverpool_25-26_home_red_fan_1.webp",
             "img/liverpool_25-26_home_red_fan_2.webp",
@@ -256,15 +203,11 @@
     },
     {
         "id": 12,
-        "categoria": "Equipos Actuales",
-        "equipo": "LIVERPOOL 25-26 WHITE FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "LIVERPOOL 25-26 AWAY WHITE FAN",
+        "descripcion": "Camiseta visitante del Liverpool 2025-26 en blanco con detalles en rojo y dorado. El toque elegante del equipo de Anfield para los partidos fuera de casa. Versión Fan de alta calidad.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/liverpool_25-26_white_fan_1.webp",
             "img/liverpool_25-26_white_fan_2.webp",
@@ -279,15 +222,11 @@
     },
     {
         "id": 13,
-        "categoria": "Equipos Actuales",
-        "equipo": "man city 25-26 black fan",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "MAN CITY 25-26 THIRD BLACK FAN",
+        "descripcion": "Tercera equipación del Manchester City 2025-26 en negro. Un diseño oscuro y sofisticado del campeón inglés, alejado del clásico celeste. Versión Fan de edición limitada para los Citizens más atrevidos.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/man_city_25-26_black_fan_1.webp",
             "img/man_city_25-26_black_fan_2.webp",
@@ -301,15 +240,11 @@
     },
     {
         "id": 14,
-        "categoria": "Equipos Actuales",
-        "equipo": "MAN CITY 25-26 FAN HOME",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "MAN CITY 25-26 HOME FAN",
+        "descripcion": "La camiseta local del Manchester City 2025-26 en el clásico celeste de los Citizens. El diseño del campeón inglés para la nueva era. Versión Fan premium con tela ligera y acabados de calidad.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/man_city_25-26_fan_home_1.webp",
             "img/man_city_25-26_fan_home_2.webp",
@@ -322,14 +257,10 @@
     {
         "id": 15,
         "categoria": "Retros",
-        "equipo": "man ud retro 98 home",
+        "equipo": "MANCHESTER UNITED RETRO 98 HOME",
+        "descripcion": "Camiseta retro del Manchester United temporada 1997-98, año del histórico doblete de Ferguson. El clásico rojo de Old Trafford con el escudo vintage y el diseño Sharp Electronics. Una joya para coleccionistas del fútbol inglés.",
         "precio": 120000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 0,
-            "XL": 0
-        },
+        "tallas": { "S": 0, "M": 1, "L": 0, "XL": 0 },
         "imagenes": [
             "img/man_ud_retro_98_home_1.webp",
             "img/man_ud_retro_98_home_2.webp",
@@ -343,15 +274,11 @@
     },
     {
         "id": 16,
-        "categoria": "Equipos Actuales",
-        "equipo": "Manchester United 25-26 home FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "MANCHESTER UNITED 25-26 HOME FAN",
+        "descripcion": "La camiseta local del Manchester United temporada 2025-26 en rojo intenso con detalles en blanco y negro. El renacimiento de los Red Devils de Old Trafford bajo la nueva era. Versión Fan de alta calidad.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/manchester_united_25-26_home_fan_1.webp",
             "img/manchester_united_25-26_home_fan_2.webp",
@@ -366,15 +293,11 @@
     },
     {
         "id": 17,
-        "categoria": "Equipos Nacionales",
-        "equipo": "portugal 2026 especial 26-27 fan",
+        "categoria": "Selecciones",
+        "equipo": "PORTUGAL 2026 ESPECIAL FAN",
+        "descripcion": "Edición especial de la Selección de Portugal para el ciclo 2026-27. El rojo de Cristiano Ronaldo y Bruno Fernandes en un diseño único y atrevido que rompe con lo convencional. Versión Fan de colección exclusiva.",
         "precio": 110000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/portugal_2026_especial_26-27_fan_1.webp",
             "img/portugal_2026_especial_26-27_fan_2.webp",
@@ -385,15 +308,11 @@
     },
     {
         "id": 18,
-        "categoria": "Equipos Actuales",
+        "categoria": "Clubes 25/26",
         "equipo": "PSG 25-26 HOME FAN",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 1,
-            "XL": 0
-        },
+        "descripcion": "La camiseta local del Paris Saint-Germain temporada 2025-26 con los colores azul, rojo y blanco de la capital francesa. Elegancia parisina en cada detalle. Versión Fan del club más glamuroso de la Ligue 1.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 1, "L": 1, "XL": 0 },
         "imagenes": [
             "img/psg_25-26_home_fan_1.webp",
             "img/psg_25-26_home_fan_2.webp",
@@ -407,15 +326,11 @@
     },
     {
         "id": 19,
-        "categoria": "Equipos Actuales",
-        "equipo": "real madrid 25-26 azul fan",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 2,
-            "L": 1,
-            "XL": 0
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "REAL MADRID 25-26 AWAY AZUL FAN",
+        "descripcion": "Camiseta visitante del Real Madrid 2025-26 en azul marino. El equipo más ganador de la historia con una segunda equipación de elegancia y poder. Versión Fan para los madridistas que dominan también de visitante.",
+        "precio": 99000,
+        "tallas": { "S": 0, "M": 2, "L": 1, "XL": 0 },
         "imagenes": [
             "img/real_madrid_25-26_azul_fan_1.webp",
             "img/real_madrid_25-26_azul_fan_2.webp",
@@ -426,15 +341,11 @@
     },
     {
         "id": 25,
-        "categoria": "Retros",
+        "categoria": "Clubes 25/26",
         "equipo": "REAL MADRID HOME WHITE FAN 2026",
-        "precio": 120000,
-        "tallas": {
-            "S": 5,
-            "M": 5,
-            "L": 5,
-            "XL": 5
-        },
+        "descripcion": "La camiseta local del Real Madrid 2026 en el eterno blanco merengue. Diseño moderno que honra la tradición del club más laureado del mundo. Versión Fan premium del campeón de Champions. Disponible en todas las tallas.",
+        "precio": 99000,
+        "tallas": { "S": 5, "M": 5, "L": 5, "XL": 5 },
         "imagenes": [
             "img/real_madrid_home_white_fan_2026_1.webp",
             "img/real_madrid_home_white_fan_2026_2.webp",
@@ -447,15 +358,11 @@
     },
     {
         "id": 26,
-        "categoria": "Equipos Actuales",
-        "equipo": "REAL MADRID SPECIAL STLY BLACK FAN",
-        "precio": 120000,
-        "tallas": {
-            "S": 5,
-            "M": 5,
-            "L": 5,
-            "XL": 5
-        },
+        "categoria": "Clubes 25/26",
+        "equipo": "REAL MADRID SPECIAL STYLE BLACK FAN",
+        "descripcion": "Edición especial del Real Madrid en negro absoluto. Una camiseta única del equipo merengue que combina el poder del negro con los escudos dorados. Versión Fan de colección para los madridistas más atrevidos.",
+        "precio": 110000,
+        "tallas": { "S": 5, "M": 5, "L": 5, "XL": 5 },
         "imagenes": [
             "img/real_madrid_special_stly_black_fan_1.webp",
             "img/real_madrid_special_stly_black_fan_2.webp",
@@ -468,14 +375,10 @@
     {
         "id": 20,
         "categoria": "Retros",
-        "equipo": "real majdrid retro 1999-00 home fan",
-        "precio": 100000,
-        "tallas": {
-            "S": 0,
-            "M": 1,
-            "L": 0,
-            "XL": 0
-        },
+        "equipo": "REAL MADRID RETRO 1999-00 HOME FAN",
+        "descripcion": "Camiseta retro del Real Madrid temporada 1999-2000, la era de los Galácticos. El blanco mítico de Figo, Raúl, Morientes y Hierro con el escudo vintage dorado. Una pieza de colección para quienes vivieron la gloria.",
+        "precio": 120000,
+        "tallas": { "S": 0, "M": 1, "L": 0, "XL": 0 },
         "imagenes": [
             "img/real_majdrid_retro_1999-00_home_fan_1.webp",
             "img/real_majdrid_retro_1999-00_home_fan_2.webp",
