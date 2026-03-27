@@ -20,7 +20,7 @@ import re
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 
 try:
     from rembg import remove as rembg_remove
@@ -39,10 +39,10 @@ IMG_EXTS     = {".jpg", ".jpeg", ".png"}
 
 # ── Umbrales de detección de fondo ────────────────────────────────────────────
 # Una sábana blanca/crema típica tiene:
-#   - Brillo promedio en las esquinas > 175  (escala 0-255)
-#   - Desviación estándar < 45              (fondo uniforme)
-BRIGHTNESS_THRESHOLD = 175
-STD_THRESHOLD        = 45
+#   - Brillo promedio en las esquinas > 130  (escala 0-255)
+#   - Desviación estándar < 85              (fondo uniforme o arrugas leves)
+BRIGHTNESS_THRESHOLD = 130
+STD_THRESHOLD        = 85
 CORNER_RATIO         = 0.10   # muestrea el 10% de la dimensión menor en cada esquina
 
 
@@ -55,6 +55,7 @@ def needs_background_removal(img_path: Path) -> bool:
     """
     try:
         with Image.open(img_path) as img:
+            img   = ImageOps.exif_transpose(img)
             rgb   = img.convert("RGB")
             w, h  = rgb.size
             m     = max(1, int(min(w, h) * CORNER_RATIO))
@@ -74,14 +75,20 @@ def needs_background_removal(img_path: Path) -> bool:
 
 def remove_bg(img_path: Path) -> Image.Image:
     """Quita el fondo con rembg y retorna imagen RGBA."""
-    raw      = img_path.read_bytes()
+    img = Image.open(img_path)
+    img = ImageOps.exif_transpose(img)
+    out_buffer = io.BytesIO()
+    img.save(out_buffer, format="PNG")
+    raw = out_buffer.getvalue()
+    
     out_raw  = rembg_remove(raw)
     return Image.open(io.BytesIO(out_raw)).convert("RGBA")
 
 
 def load_direct(img_path: Path) -> Image.Image:
-    """Carga imagen sin quitar fondo y normaliza el modo."""
+    """Carga imagen sin quitar fondo y normaliza el modo y rotación."""
     img = Image.open(img_path)
+    img = ImageOps.exif_transpose(img)
     if img.mode in ("P", "LA"):
         img = img.convert("RGBA")
     elif img.mode not in ("RGB", "RGBA"):
