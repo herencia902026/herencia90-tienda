@@ -14,8 +14,8 @@
     <header class="header">
         <div class="header-container">
             <img src="img/logo.webp" alt="Herencia 90 Logo" class="logo">
+            <h1 class="header-title">Colección 2026</h1>
             <div class="header-right">
-                <h1>Colección 2026</h1>
                 <input type="text" id="searchInput" class="search-input" placeholder="Buscar equipo, ej. Real Madrid...">
                 <button class="cart-btn" id="cartBtn" aria-label="Ver carrito">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -62,7 +62,9 @@
             <span class="close-btn" id="closeModal">&times;</span>
             <div class="modal-body">
                 <div class="modal-gallery">
-                    <img id="mainImage" src="" alt="Product Image">
+                    <div id="mainImageContainer" class="main-image-container">
+                        <img id="mainImage" src="" alt="Product Image">
+                    </div>
                     <div class="thumbnails" id="thumbnailsContainer"></div>
                 </div>
                 <div class="modal-info">

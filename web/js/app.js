@@ -161,6 +161,25 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.onclick = () => { modal.style.display = "none"; }
     window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; }
 
+    // Imagen zoom manual
+    const mainImgContainer = document.getElementById('mainImageContainer');
+    const mainImg = document.getElementById('mainImage');
+    if (mainImgContainer && mainImg) {
+        mainImgContainer.addEventListener('mousemove', (e) => {
+            const rect = mainImgContainer.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            mainImg.style.transformOrigin = `${(x / rect.width) * 100}% ${(y / rect.height) * 100}%`;
+        });
+        mainImgContainer.addEventListener('mouseenter', () => {
+            mainImg.classList.add('zoomed');
+        });
+        mainImgContainer.addEventListener('mouseleave', () => {
+            mainImg.classList.remove('zoomed');
+            setTimeout(() => { if (!mainImg.classList.contains('zoomed')) mainImg.style.transformOrigin = 'center center'; }, 150);
+        });
+    }
+
     // Search logic
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
