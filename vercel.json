@@ -6,6 +6,14 @@
       "use": "@vercel/static"
     }
   ],
+  "headers": [
+    {
+      "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    }
+  ],
   "routes": [
     { "src": "/", "dest": "/web/index.html" },
     { "src": "/admin", "dest": "/web/admin.html" },
