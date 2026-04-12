@@ -1,15 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/telegram.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "web/**",
-      "use": "@vercel/static"
-    }
-  ],
+  "outputDirectory": "web",
   "headers": [
     {
       "source": "/(.*).html",
@@ -18,13 +8,8 @@
       ]
     }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/", "dest": "/web/index.html" },
-    { "src": "/admin", "dest": "/web/admin.html" },
-    { "src": "/admin.html", "dest": "/web/admin.html" },
-    { "src": "/login", "dest": "/web/login.html" },
-    { "src": "/login.html", "dest": "/web/login.html" },
-    { "src": "/(.*)", "dest": "/web/$1" }
+  "rewrites": [
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/login", "destination": "/login.html" }
   ]
 }
