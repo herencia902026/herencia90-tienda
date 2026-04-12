@@ -253,32 +253,30 @@
                                     <label style="color:var(--gold)">Costo del producto en USD (Para calcular ganancia real)</label>
                                     <input type="number" id="t-costo-usd" min="0" step="0.01" placeholder="Ej: 10.44">
                                 </div>
-                                <button type="submit" class="btn-save" style="width:100%; margin-top:5px;">Registrar Movimiento</button>
+                                <!-- Costos rapidos dentro del formulario -->
+                                <div style="border-top:1px dashed #ddd; margin-top:12px; padding-top:12px;">
+                                    <div style="font-size:11px; font-weight:700; color:#666; margin-bottom:8px; text-transform:uppercase;">📦 Agregar Envío o Caja (costos que asumiste tú)</div>
+                                    <div style="display:flex; flex-direction:column; gap:8px;">
+                                        <div style="background:#f8f9fa; padding:8px; border-radius:6px; border:1px solid #eee;">
+                                            <div style="font-size:11px; font-weight:700; margin-bottom:5px;">🚚 Envío</div>
+                                            <div style="display:flex; gap:6px; align-items:center;">
+                                                <input type="number" id="quick-envio-monto" placeholder="Valor ($)" min="0" style="flex:1; font-size:12px; width:auto;">
+                                                <input type="text" id="quick-envio-desc" placeholder="Detalle (ej: Juan García)" style="flex:2; font-size:12px; width:auto;">
+                                                <button type="button" class="btn-save" style="padding:5px 8px; font-size:11px; white-space:nowrap;" onclick="quickAdd('envio')">+ Agregar</button>
+                                            </div>
+                                        </div>
+                                        <div style="background:#f8f9fa; padding:8px; border-radius:6px; border:1px solid #eee;">
+                                            <div style="font-size:11px; font-weight:700; margin-bottom:5px;">📦 Caja</div>
+                                            <div style="display:flex; gap:6px; align-items:center;">
+                                                <input type="number" id="quick-caja-monto" placeholder="Valor ($)" min="0" style="flex:1; font-size:12px; width:auto;">
+                                                <input type="text" id="quick-caja-desc" placeholder="Detalle (ej: Juan García)" style="flex:2; font-size:12px; width:auto;">
+                                                <button type="button" class="btn-save" style="padding:5px 8px; font-size:11px; white-space:nowrap;" onclick="quickAdd('caja')">+ Agregar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-save" style="width:100%; margin-top:12px;">Registrar Movimiento</button>
                             </form>
-                        </div>
-
-                        <!-- Costos rapidos -->
-                        <div class="form-container" style="margin-top:0;">
-                            <h3>📦 Agregar Costo Puntual</h3>
-                            <p style="font-size:11px; color:#888; margin-top:-5px;">Para casos donde asumiste tú el envío o la caja.</p>
-                            <div style="display:flex; flex-direction:column; gap:10px;">
-                                <div style="background:#f8f9fa; padding:10px; border-radius:6px; border:1px solid #eee;">
-                                    <div style="font-size:11px; font-weight:700; margin-bottom:6px;">🚚 Envío</div>
-                                    <div style="display:flex; gap:6px; align-items:center;">
-                                        <input type="number" id="quick-envio-monto" placeholder="Valor ($)" min="0" style="flex:1; font-size:12px;">
-                                        <input type="text" id="quick-envio-desc" placeholder="Detalle (ej: Juan García)" style="flex:2; font-size:12px;">
-                                        <button class="btn-save" style="padding:6px 10px; font-size:11px;" onclick="quickAdd('envio')">+ Agregar</button>
-                                    </div>
-                                </div>
-                                <div style="background:#f8f9fa; padding:10px; border-radius:6px; border:1px solid #eee;">
-                                    <div style="font-size:11px; font-weight:700; margin-bottom:6px;">📦 Caja</div>
-                                    <div style="display:flex; gap:6px; align-items:center;">
-                                        <input type="number" id="quick-caja-monto" placeholder="Valor ($)" min="0" style="flex:1; font-size:12px;">
-                                        <input type="text" id="quick-caja-desc" placeholder="Detalle (ej: Juan García)" style="flex:2; font-size:12px;">
-                                        <button class="btn-save" style="padding:6px 10px; font-size:11px;" onclick="quickAdd('caja')">+ Agregar</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
