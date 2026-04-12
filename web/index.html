@@ -30,7 +30,6 @@
             <img src="img/logo.webp" alt="Herencia 90 Logo" class="logo">
             <h1 class="header-title">Colección 2026</h1>
             <div class="header-right">
-                <a href="#pre-pedido" class="pp-nav-pill">🛒 Pre-Pedido</a>
                 <input type="text" id="searchInput" class="search-input" placeholder="Buscar equipo, ej. Real Madrid...">
                 <button class="cart-btn" id="cartBtn" aria-label="Ver carrito">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -62,7 +61,7 @@
             <p class="hero-subtitle">Camisetas retro, ediciones limitadas y la nueva colección 2026 para los verdaderos hinchas.</p>
             <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
                 <a href="#clubes_25_26" class="btn-hero">Explorar Colección</a>
-                <a href="#pre-pedido" class="btn-hero-pp">🛒 Pre-Pedido</a>
+                <a href="preventa.html" class="btn-hero-pp">🏷️ Pre-Venta</a>
             </div>
         </div>
     </section>
@@ -71,146 +70,7 @@
         <div class="product-grid" id="productGrid"></div>
     </main>
 
-    <!-- ─── PRE-PEDIDO / PRE-VENTA ─────────────────────────── -->
-    <section id="pre-pedido" style="padding:70px 20px 80px;background:linear-gradient(180deg,transparent 0%,rgba(217,195,145,0.025) 50%,transparent 100%);">
-        <div style="text-align:center;margin-bottom:46px;max-width:700px;margin-left:auto;margin-right:auto;">
-            <span style="display:inline-block;background:var(--gold);color:#111;font-size:0.68rem;font-weight:800;letter-spacing:3px;padding:5px 18px;border-radius:20px;text-transform:uppercase;margin-bottom:16px;">⭐ Servicio exclusivo</span>
-            <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(2rem,5vw,3.2rem);text-transform:uppercase;color:#fff;margin-bottom:14px;line-height:1.1;">La Quieres Pero<br><span style="color:var(--gold);font-style:italic;">No Está en Stock</span></h2>
-            <p style="color:var(--text-secondary);font-size:0.95rem;max-width:500px;margin:0 auto 36px;line-height:1.7;">Te la traemos directo desde el proveedor. Solo reserva con el <strong style="color:#fff;">50% del valor</strong> y en aprox. 15 días la tienes en tu puerta.</p>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-                <div style="background:rgba(217,195,145,0.05);border:1px solid var(--glass-border);border-radius:14px;padding:18px 20px;text-align:center;flex:1;min-width:110px;max-width:155px;">
-                    <span style="font-size:1.5rem;display:block;margin-bottom:7px;">💰</span>
-                    <div style="font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Anticipo</div>
-                    <div style="font-size:0.95rem;font-weight:700;color:var(--gold);font-family:'Oswald',sans-serif;">50% del valor</div>
-                </div>
-                <div style="background:rgba(217,195,145,0.05);border:1px solid var(--glass-border);border-radius:14px;padding:18px 20px;text-align:center;flex:1;min-width:110px;max-width:155px;">
-                    <span style="font-size:1.5rem;display:block;margin-bottom:7px;">⏱️</span>
-                    <div style="font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Tiempo</div>
-                    <div style="font-size:0.95rem;font-weight:700;color:var(--gold);font-family:'Oswald',sans-serif;">~15 días</div>
-                </div>
-                <div style="background:rgba(217,195,145,0.05);border:1px solid var(--glass-border);border-radius:14px;padding:18px 20px;text-align:center;flex:1;min-width:110px;max-width:155px;">
-                    <span style="font-size:1.5rem;display:block;margin-bottom:7px;">🌍</span>
-                    <div style="font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Envío</div>
-                    <div style="font-size:0.95rem;font-weight:700;color:var(--gold);font-family:'Oswald',sans-serif;">Toda Colombia</div>
-                </div>
-                <div style="background:rgba(217,195,145,0.05);border:1px solid var(--glass-border);border-radius:14px;padding:18px 20px;text-align:center;flex:1;min-width:110px;max-width:155px;">
-                    <span style="font-size:1.5rem;display:block;margin-bottom:7px;">✅</span>
-                    <div style="font-size:0.62rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Garantía</div>
-                    <div style="font-size:0.95rem;font-weight:700;color:var(--gold);font-family:'Oswald',sans-serif;">Calidad asegurada</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- WIZARD CARD -->
-        <div style="max-width:590px;margin:0 auto;background:rgba(12,12,12,0.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:20px;overflow:hidden;">
-            <div id="pp-progress" style="display:flex;align-items:flex-start;padding:22px 26px 16px;border-bottom:1px solid rgba(255,255,255,0.06);"></div>
-            <div id="pp-body" style="padding:26px;">
-
-                <!-- PASO 1: La Camiseta -->
-                <div class="pp-slide" id="pp-slide-1">
-                    <div style="font-family:'Oswald',sans-serif;font-size:1.2rem;text-transform:uppercase;color:#fff;margin-bottom:3px;">La Camiseta 👕</div>
-                    <div style="font-size:0.79rem;color:var(--text-secondary);margin-bottom:20px;">Cuéntanos qué camiseta estás buscando</div>
-                    <div style="margin-bottom:14px;">
-                        <label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:6px;">¿Qué equipo o selección? *</label>
-                        <input type="text" id="pp-equipo" placeholder="Ej: Real Madrid, Selección Colombia, PSG…" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                    </div>
-                    <div style="margin-bottom:14px;">
-                        <label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:8px;">Tipo de camiseta</label>
-                        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
-                            <button type="button" class="pp-tipo-btn" data-val="Local" onclick="ppSelectTipo(this)">⚡ Local</button>
-                            <button type="button" class="pp-tipo-btn" data-val="Visitante" onclick="ppSelectTipo(this)">✈️ Visitante</button>
-                            <button type="button" class="pp-tipo-btn" data-val="Tercera" onclick="ppSelectTipo(this)">🎨 Tercera</button>
-                            <button type="button" class="pp-tipo-btn" data-val="No sé / Cualquiera" onclick="ppSelectTipo(this)">🤷 No sé</button>
-                        </div>
-                    </div>
-                    <div>
-                        <label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:6px;">Temporada <span style="font-weight:400;text-transform:none;font-size:0.68rem;">(opcional)</span></label>
-                        <input type="text" id="pp-temporada" placeholder="Ej: 2025/26, Retro 90s, La más reciente…" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                    </div>
-                </div>
-
-                <!-- PASO 2: Talla -->
-                <div class="pp-slide" id="pp-slide-2" style="display:none;">
-                    <div style="font-family:'Oswald',sans-serif;font-size:1.2rem;text-transform:uppercase;color:#fff;margin-bottom:3px;">Tu Talla 📐</div>
-                    <div style="font-size:0.79rem;color:var(--text-secondary);margin-bottom:20px;">Selecciona la talla y personalización si la deseas</div>
-                    <div style="margin-bottom:18px;">
-                        <label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:8px;">Talla *</label>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                            <button type="button" class="pp-talla-btn" data-val="S" onclick="ppSelectTalla(this)">S</button>
-                            <button type="button" class="pp-talla-btn" data-val="M" onclick="ppSelectTalla(this)">M</button>
-                            <button type="button" class="pp-talla-btn" data-val="L" onclick="ppSelectTalla(this)">L</button>
-                            <button type="button" class="pp-talla-btn" data-val="XL" onclick="ppSelectTalla(this)">XL</button>
-                            <button type="button" class="pp-talla-btn" data-val="XXL" onclick="ppSelectTalla(this)">XXL</button>
-                        </div>
-                    </div>
-                    <div style="margin-bottom:12px;">
-                        <label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:8px;">¿Con personalización?</label>
-                        <div style="display:flex;gap:8px;">
-                            <button type="button" class="pp-tipo-btn" data-val="no" id="pp-custom-no" onclick="ppSelectCustom('no')" style="flex:1;">Sin personalización</button>
-                            <button type="button" class="pp-tipo-btn" data-val="si" id="pp-custom-si" onclick="ppSelectCustom('si')" style="flex:1;">Con nombre / número ⚽</button>
-                        </div>
-                    </div>
-                    <div id="pp-custom-fields" style="display:none;background:rgba(217,195,145,0.04);border:1px solid var(--glass-border);border-radius:10px;padding:14px;margin-top:6px;">
-                        <div style="display:flex;gap:10px;">
-                            <div style="flex:1;">
-                                <label style="display:block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:5px;">Nombre en camiseta</label>
-                                <input type="text" id="pp-custom-nombre" placeholder="Ej: JAMES" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 12px;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.86rem;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                            </div>
-                            <div style="flex:1;">
-                                <label style="display:block;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:5px;">Número</label>
-                                <input type="number" id="pp-custom-num" placeholder="10" min="1" max="99" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 12px;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.86rem;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PASO 3: Tus Datos -->
-                <div class="pp-slide" id="pp-slide-3" style="display:none;">
-                    <div style="font-family:'Oswald',sans-serif;font-size:1.2rem;text-transform:uppercase;color:#fff;margin-bottom:3px;">Tus Datos 👤</div>
-                    <div style="font-size:0.79rem;color:var(--text-secondary);margin-bottom:20px;">Para contactarte y coordinar el envío</div>
-                    <div style="margin-bottom:13px;">
-                        <label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:6px;">Nombre completo *</label>
-                        <input type="text" id="pp-nombre" placeholder="Tu nombre y apellido" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                    </div>
-                    <div style="margin-bottom:13px;">
-                        <label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:6px;">Celular *</label>
-                        <input type="tel" id="pp-celular" placeholder="Ej: 300 123 4567" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                    </div>
-                    <div style="margin-bottom:13px;">
-                        <label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:6px;">Ciudad *</label>
-                        <input type="text" id="pp-ciudad" placeholder="Ej: Medellín, Bogotá, Cali…" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                    </div>
-                    <div>
-                        <label style="display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-secondary);margin-bottom:6px;">Notas <span style="font-weight:400;text-transform:none;font-size:0.68rem;">(opcional)</span></label>
-                        <textarea id="pp-notas" rows="2" placeholder="Referencia, foto, detalle especial que debamos saber…" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:11px 14px;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.86rem;outline:none;resize:vertical;min-height:68px;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
-                    </div>
-                </div>
-
-                <!-- PASO 4: Confirmar -->
-                <div class="pp-slide" id="pp-slide-4" style="display:none;">
-                    <div style="font-family:'Oswald',sans-serif;font-size:1.2rem;text-transform:uppercase;color:#fff;margin-bottom:3px;">Confirma tu Pedido 🎉</div>
-                    <div style="font-size:0.79rem;color:var(--text-secondary);margin-bottom:20px;">Revisa el resumen y envíanos el mensaje</div>
-                    <div id="pp-summary-box" style="background:rgba(217,195,145,0.04);border:1px solid var(--glass-border);border-radius:12px;padding:16px;margin-bottom:14px;"></div>
-                    <div style="background:rgba(217,195,145,0.07);border:1px solid rgba(217,195,145,0.2);border-radius:8px;padding:12px 14px;font-size:0.8rem;color:var(--gold);margin-bottom:16px;line-height:1.6;">
-                        💳 <strong>Anticipo del 50%</strong> para confirmar. Te contactamos para coordinar el pago.<br>
-                        ⏱️ Entrega estimada: <strong>~15 días hábiles</strong>.
-                    </div>
-                    <a id="pp-wa-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--whatsapp-green);color:#fff;padding:14px 24px;border-radius:10px;font-size:1rem;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all 0.2s;box-shadow:0 4px 20px rgba(37,211,102,0.2);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 24px rgba(37,211,102,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(37,211,102,0.2)'">
-                        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.233-.002.332-.002c.099-.001.233-.037.363.275.13.312.443 1.08.482 1.159.039.079.065.171.017.266-.048.096-.073.155-.138.229-.065.074-.136.162-.195.226-.065.069-.133.143-.058.272.075.129.333.551.713.889.49.438.905.576 1.033.64.128.064.204.053.28-.032.076-.085.328-.376.415-.506.087-.13.174-.108.291-.064.117.044.743.349.871.413.128.064.212.096.242.148.03.052.03.303-.114.708zM12 2C6.477 2 2 6.477 2 12c0 1.758.455 3.425 1.29 4.903L2 22l5.226-1.213C8.68 21.554 10.312 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
-                        Enviar Pre-Pedido por WhatsApp
-                    </a>
-                </div>
-            </div>
-
-            <!-- Botones de navegación -->
-            <div style="padding:0 26px 22px;display:flex;gap:10px;">
-                <button type="button" id="pp-back-btn" onclick="ppBack()" style="display:none;background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:var(--text-secondary);padding:11px 20px;border-radius:8px;cursor:pointer;font-size:0.84rem;font-family:'Montserrat',sans-serif;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--text-secondary)'">← Atrás</button>
-                <button type="button" id="pp-next-btn" onclick="ppNext()" style="flex:1;background:var(--gold);border:none;color:#111;padding:12px 24px;border-radius:8px;cursor:pointer;font-size:0.9rem;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all 0.2s;" onmouseover="this.style.background='var(--gold-hover)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='var(--gold)';this.style.transform=''">Continuar →</button>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
+        <footer class="footer">
         <p>&copy; 2026 Herencia 90. Todos los derechos reservados.</p>
     </footer>
 
@@ -322,9 +182,9 @@
             </svg>
             <span>Menú</span>
         </button>
-        <button class="mobile-nav-btn" onclick="document.getElementById('pre-pedido').scrollIntoView({behavior:'smooth'})" aria-label="Pre-Pedido">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-            <span>Pre-Pedir</span>
+        <button class="mobile-nav-btn" onclick="location.href='preventa.html'" aria-label="Pre-Venta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10l-1.5 7H8.5L7 7z"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/><path d="M5 7H3"/></svg>
+            <span>Pre-Venta</span>
         </button>
         <button class="mobile-nav-btn mobile-cart-btn" id="mobileCartBtn" aria-label="Carrito">
             <span class="mobile-cart-wrap">
@@ -340,170 +200,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="js/app.js"></script>
-    <script>
-    // ─── PRE-PEDIDO WIZARD ────────────────────────────────────
-    (function () {
-        var ppStep = 1;
-        var PP_TOTAL = 4;
-        var PP_LABELS = ['Camiseta', 'Talla', 'Mis Datos', 'Confirmar'];
-
-        function ppRenderProgress() {
-            var el = document.getElementById('pp-progress');
-            if (!el) return;
-            var html = '';
-            for (var i = 1; i <= PP_TOTAL; i++) {
-                var done = i < ppStep, active = i === ppStep;
-                var connColor = i < ppStep ? 'var(--gold-dark)' : 'rgba(255,255,255,0.1)';
-                var numBg = done ? 'var(--gold-dark)' : active ? 'var(--gold)' : 'rgba(255,255,255,0.04)';
-                var numBorder = done ? 'var(--gold-dark)' : active ? 'var(--gold)' : 'rgba(255,255,255,0.15)';
-                var numColor = done ? '#fff' : active ? '#111' : 'var(--text-secondary)';
-                var labelColor = active ? 'var(--gold)' : 'var(--text-secondary)';
-                var labelWeight = active ? '700' : '400';
-                var glow = active ? 'box-shadow:0 0 0 4px rgba(217,195,145,0.15);' : '';
-                var connector = i < PP_TOTAL
-                    ? '<div style="position:absolute;top:13px;left:calc(50% + 15px);right:calc(-50% + 15px);height:1px;background:' + connColor + ';z-index:0;"></div>'
-                    : '';
-                html += '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;">' +
-                    connector +
-                    '<div style="width:28px;height:28px;border-radius:50%;border:2px solid ' + numBorder + ';background:' + numBg + ';display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:' + numColor + ';position:relative;z-index:1;' + glow + '">' + (done ? '✓' : i) + '</div>' +
-                    '<div style="font-size:0.58rem;color:' + labelColor + ';font-weight:' + labelWeight + ';text-transform:uppercase;letter-spacing:0.8px;white-space:nowrap;">' + PP_LABELS[i - 1] + '</div>' +
-                    '</div>';
-            }
-            el.innerHTML = html;
-        }
-
-        function ppShowSlide(n) {
-            for (var i = 1; i <= PP_TOTAL; i++) {
-                var s = document.getElementById('pp-slide-' + i);
-                if (s) s.style.display = i === n ? 'block' : 'none';
-            }
-            var backBtn = document.getElementById('pp-back-btn');
-            var nextBtn = document.getElementById('pp-next-btn');
-            if (backBtn) backBtn.style.display = n > 1 ? 'inline-block' : 'none';
-            if (nextBtn) nextBtn.style.display = n < PP_TOTAL ? 'block' : 'none';
-            ppRenderProgress();
-        }
-
-        function ppValidate() {
-            if (ppStep === 1) {
-                var eq = document.getElementById('pp-equipo');
-                if (!eq.value.trim()) {
-                    eq.style.borderColor = '#ff5252'; eq.focus();
-                    setTimeout(function () { eq.style.borderColor = 'rgba(255,255,255,0.1)'; }, 1800);
-                    return false;
-                }
-            }
-            if (ppStep === 2) {
-                if (!document.querySelector('.pp-talla-btn.pp-selected')) {
-                    var grid = document.getElementById('pp-talla-grid') || document.querySelector('[data-val="S"]').parentElement;
-                    grid.style.outline = '1.5px solid #ff5252';
-                    grid.style.borderRadius = '8px';
-                    setTimeout(function () { grid.style.outline = ''; }, 1800);
-                    return false;
-                }
-            }
-            if (ppStep === 3) {
-                var ids = ['pp-nombre', 'pp-celular', 'pp-ciudad'];
-                for (var f = 0; f < ids.length; f++) {
-                    var el = document.getElementById(ids[f]);
-                    if (!el.value.trim()) {
-                        el.style.borderColor = '#ff5252'; el.focus();
-                        (function(e){ setTimeout(function(){ e.style.borderColor='rgba(255,255,255,0.1)'; }, 1800); })(el);
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        function ppBuildSummary() {
-            var equipo   = document.getElementById('pp-equipo').value.trim();
-            var temporada= document.getElementById('pp-temporada').value.trim();
-            var tipoBtn  = document.querySelector('#pp-slide-1 .pp-tipo-btn.pp-selected');
-            var tipo     = tipoBtn ? tipoBtn.dataset.val : 'No especificado';
-            var tallaBtn = document.querySelector('.pp-talla-btn.pp-selected');
-            var talla    = tallaBtn ? tallaBtn.dataset.val : '';
-            var isCustom = document.getElementById('pp-custom-si').classList.contains('pp-selected');
-            var cNombre  = document.getElementById('pp-custom-nombre').value.trim();
-            var cNum     = document.getElementById('pp-custom-num').value.trim();
-            var nombre   = document.getElementById('pp-nombre').value.trim();
-            var celular  = document.getElementById('pp-celular').value.trim();
-            var ciudad   = document.getElementById('pp-ciudad').value.trim();
-            var notas    = document.getElementById('pp-notas').value.trim();
-
-            var personaliz = 'Sin personalización';
-            if (isCustom) {
-                personaliz = 'Con nombre/número';
-                if (cNombre) personaliz += ' — ' + cNombre.toUpperCase();
-                if (cNum)    personaliz += ' #' + cNum;
-            }
-
-            var rows = [
-                ['Equipo / Selección', equipo],
-                ['Tipo', tipo],
-                ['Temporada', temporada || 'La más reciente'],
-                ['Talla', talla],
-                ['Personalización', personaliz],
-                ['divider',''],
-                ['Tu nombre', nombre],
-                ['Celular', celular],
-                ['Ciudad', ciudad]
-            ];
-            if (notas) rows.push(['Notas', notas]);
-
-            var box = document.getElementById('pp-summary-box');
-            box.innerHTML = rows.map(function(r) {
-                if (r[0] === 'divider') return '<div style="border-bottom:1px solid rgba(255,255,255,0.07);margin:7px 0;"></div>';
-                return '<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);gap:12px;">' +
-                    '<span style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-secondary);min-width:110px;flex-shrink:0;">' + r[0] + '</span>' +
-                    '<span style="font-size:0.83rem;font-weight:600;color:#fff;text-align:right;">' + r[1] + '</span>' +
-                    '</div>';
-            }).join('');
-
-            var customStr = isCustom ? '\n✨ Personalización: ' + personaliz : '';
-            var notasStr  = notas ? '\n📝 Notas: ' + notas : '';
-            var msg = '🛒 *PRE-PEDIDO HERENCIA 90*\n\n' +
-                '👕 *Camiseta:* ' + equipo + ' — ' + tipo + ' — ' + (temporada || 'La más reciente') + '\n' +
-                '📐 *Talla:* ' + talla + customStr + '\n\n' +
-                '👤 *Nombre:* ' + nombre + '\n' +
-                '📱 *Celular:* ' + celular + '\n' +
-                '📍 *Ciudad:* ' + ciudad + notasStr + '\n\n' +
-                '━━━━━━━━━━━━━━━\n💰 Anticipo del 50% para confirmar\n⏱️ Entrega ~15 días hábiles';
-
-            document.getElementById('pp-wa-btn').href = 'https://wa.me/573183867147?text=' + encodeURIComponent(msg);
-        }
-
-        window.ppNext = function () {
-            if (!ppValidate()) return;
-            if (ppStep === PP_TOTAL - 1) ppBuildSummary();
-            ppStep = Math.min(ppStep + 1, PP_TOTAL);
-            ppShowSlide(ppStep);
-            document.getElementById('pp-body').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        };
-        window.ppBack = function () {
-            if (ppStep > 1) { ppStep--; ppShowSlide(ppStep); }
-        };
-        window.ppSelectTipo = function (btn) {
-            btn.closest('div').querySelectorAll('.pp-tipo-btn').forEach(function(b){ b.classList.remove('pp-selected'); });
-            btn.classList.add('pp-selected');
-        };
-        window.ppSelectTalla = function (btn) {
-            document.querySelectorAll('.pp-talla-btn').forEach(function(b){ b.classList.remove('pp-selected'); });
-            btn.classList.add('pp-selected');
-        };
-        window.ppSelectCustom = function (val) {
-            ['no','si'].forEach(function(v){
-                document.getElementById('pp-custom-'+v).classList.toggle('pp-selected', v === val);
-            });
-            document.getElementById('pp-custom-fields').style.display = val === 'si' ? 'block' : 'none';
-        };
-
-        document.addEventListener('DOMContentLoaded', function () {
-            ppRenderProgress();
-            ppShowSlide(1);
-            ppSelectCustom('no');
-        });
-    })();
-    </script>
 </body>
 </html>

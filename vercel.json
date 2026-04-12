@@ -10,6 +10,7 @@
   ],
   "rewrites": [
     { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/login", "destination": "/login.html" }
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/preventa", "destination": "/preventa.html" }
   ]
 }
