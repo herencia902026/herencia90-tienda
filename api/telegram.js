@@ -37,6 +37,19 @@ function parseMessage(text) {
   if (raw.startsWith('top') || raw === '/top') return { cmd: 'top' };
   if (['pendientes', '/pendientes'].includes(raw)) return { cmd: 'pendientes' };
   if (['anular', '/anular'].includes(raw)) return { cmd: 'anular' };
+  if (['pedidos', '/pedidos'].includes(raw)) return { cmd: 'pedidos' };
+
+  if (raw.startsWith('pagar') || raw.startsWith('/pagar')) {
+    const texto = text.replace(/^\/?(pagar)\s*/i, '').trim();
+    return { cmd: 'pagar', texto };
+  }
+  if (raw.startsWith('enviar') || raw.startsWith('/enviar')) {
+    const resto = text.replace(/^\/?(enviar)\s*/i, '').trim();
+    const montoMatch = resto.match(/\b(\d{3,9})\b/);
+    const costo = montoMatch ? parseInt(montoMatch[1]) : 0;
+    const texto = resto.replace(/\b\d{3,9}\b/, '').trim();
+    return { cmd: 'enviar', texto, costo };
+  }
 
   if (raw.startsWith('ventas')) {
     const periodo = raw.includes('hoy') ? 'hoy' : raw.includes('mes') ? 'mes' : 'todo';
@@ -84,8 +97,8 @@ function parseMessage(text) {
 async function handleAyuda() {
   return `🏆 *H90 Assistant — Herencia 90*\n\n` +
     `*Registrar:*\n• \`venta colombia L 90000\`\n• \`gasto envio cajas 22000\`\n• \`gasto publicidad instagram 50000\`\n\n` +
-    `*Consultar:*\n• \`caja\` — saldo actual\n• \`stock colombia\` — inventario\n• \`ventas hoy\` / \`ventas mes\`\n• \`resumen\` — resumen del mes\n• \`top\` — más vendidas\n• \`pendientes\` — pedidos sin enviar\n\n` +
-    `*Pedidos:*\n• \`pedido Juan García - Colombia L - Bogotá\`\n\n` +
+    `*Consultar:*\n• \`caja\` — saldo actual\n• \`stock colombia\` — inventario\n• \`ventas hoy\` / \`ventas mes\`\n• \`resumen\` — resumen del mes\n• \`top\` — más vendidas\n\n` +
+    `*Pedidos:*\n• \`pedido Juan García - Colombia L - Bogotá\`\n• \`pedidos\` — ver todos con estado\n• \`pagar Juan García\` — marcar como pagado\n• \`enviar Juan García 15000\` — marcar enviado + registrar gasto envío\n\n` +
     `*Correcciones:*\n• \`anular\` — anula la última transacción del día`;
 }
 
@@ -177,7 +190,8 @@ async function handleResumen() {
   const ganancia = ventas.reduce((s, t) => s + Number(t.monto) - (Number(t.costo_usd_asociado) * Number(t.trm)), 0);
   const [y, m] = thisMonth().split('-');
   const nombreMes = new Date(y, m - 1).toLocaleString('es-CO', { month: 'long', year: 'numeric' });
-  return `📋 *Resumen ${nombreMes}*\n\n📈 Ingresos: ${fmt.format(ingresos)}\n📉 Gastos: ${fmt.format(gastos)}\n💰 Saldo: ${fmt.format(ingresos - gastos)}\n\n👕 Ventas: ${ventas.length} unidades\n💎 Ganancia neta: ${fmt.format(ganancia)}`;
+  const gananciaReal = ganancia - gastos;
+  return `📋 *Resumen ${nombreMes}*\n\n📈 Ingresos totales: ${fmt.format(ingresos)}\n📉 Gastos operacionales: ${fmt.format(gastos)}\n💰 Saldo caja: ${fmt.format(ingresos - gastos)}\n\n👕 Ventas: ${ventas.length} unidades\n💎 Ganancia bruta: ${fmt.format(ganancia)}\n🏆 Ganancia real: ${fmt.format(gananciaReal)}`;
 }
 
 async function handleTop() {
@@ -207,6 +221,67 @@ async function handlePendientes() {
   const { data } = await db.from('transacciones').select('fecha, descripcion').like('descripcion', '[PENDIENTE]%').order('fecha', { ascending: false });
   if (!data || data.length === 0) return '✅ No hay pedidos pendientes.';
   return '📦 *Pedidos pendientes:*\n\n' + data.map(t => `• ${t.fecha} — ${t.descripcion.replace('[PENDIENTE] ', '')}`).join('\n');
+}
+
+async function handlePedidos() {
+  const { data } = await db.from('transacciones')
+    .select('fecha, descripcion')
+    .or('descripcion.like.[PENDIENTE]%,descripcion.like.[PAGADO]%,descripcion.like.[ENVIADO]%')
+    .order('fecha', { ascending: false });
+  if (!data || data.length === 0) return '✅ No hay pedidos registrados.';
+  const iconos = { 'PENDIENTE': '🟡', 'PAGADO': '🟢', 'ENVIADO': '📦' };
+  let msg = '📋 *Estado de pedidos:*\n\n';
+  data.forEach(t => {
+    const estado = Object.keys(iconos).find(k => t.descripcion.startsWith(`[${k}]`)) || 'PENDIENTE';
+    const desc = t.descripcion.replace(/^\[.*?\]\s*/, '');
+    msg += `${iconos[estado]} *${estado}* — ${t.fecha}\n   ${desc}\n`;
+  });
+  return msg;
+}
+
+async function handlePagar({ texto }) {
+  if (!texto) return `❌ Indica el nombre del pedido. Ej: \`pagar Juan García\``;
+  const { data } = await db.from('transacciones')
+    .select('id, descripcion')
+    .like('descripcion', `[PENDIENTE]%${texto}%`)
+    .limit(1);
+  if (!data || data.length === 0) return `❌ No encontré pedido pendiente con "${texto}"`;
+  const nuevaDesc = data[0].descripcion.replace('[PENDIENTE]', '[PAGADO]');
+  const { error } = await db.from('transacciones').update({ descripcion: nuevaDesc }).eq('id', data[0].id);
+  if (error) return `❌ Error: ${error.message}`;
+  return `✅ *Pedido marcado como pagado:*\n${nuevaDesc.replace('[PAGADO] ', '')}`;
+}
+
+async function handleEnviar({ texto, costo }) {
+  if (!texto) return `❌ Indica el nombre del pedido. Ej: \`enviar Juan García 15000\``;
+  const { data } = await db.from('transacciones')
+    .select('id, descripcion')
+    .like('descripcion', `[PAGADO]%${texto}%`)
+    .limit(1);
+  if (!data || data.length === 0) {
+    // Buscar también en PENDIENTE por si no se marcó como pagado antes
+    const { data: d2 } = await db.from('transacciones')
+      .select('id, descripcion')
+      .like('descripcion', `[PENDIENTE]%${texto}%`)
+      .limit(1);
+    if (!d2 || d2.length === 0) return `❌ No encontré pedido con "${texto}". Primero usa \`pagar\` o verifica el nombre.`;
+    const nuevaDesc = d2[0].descripcion.replace('[PENDIENTE]', '[ENVIADO]');
+    await db.from('transacciones').update({ descripcion: nuevaDesc }).eq('id', d2[0].id);
+  } else {
+    const nuevaDesc = data[0].descripcion.replace('[PAGADO]', '[ENVIADO]');
+    await db.from('transacciones').update({ descripcion: nuevaDesc }).eq('id', data[0].id);
+  }
+  // Registrar gasto de envio si se indicó costo
+  let gastoMsg = '';
+  if (costo > 0) {
+    await db.from('transacciones').insert({
+      id: randomUUID(), tipo: 'gasto', categoria: 'Envíos Nacionales',
+      fecha: today(), monto: costo, usd_amount: costo / 3714, trm: 3714,
+      descripcion: `Envío — ${texto}`, costo_usd_asociado: 0
+    });
+    gastoMsg = `\n💸 Gasto de envío registrado: ${fmt.format(costo)}`;
+  }
+  return `📦 *Pedido marcado como enviado:*\n${texto}${gastoMsg}`;
 }
 
 async function handleAnular() {
@@ -273,6 +348,9 @@ module.exports = async function handler(req, res) {
       case 'top':        reply = await handleTop(); break;
       case 'pedido':     reply = await handlePedido(parsed); break;
       case 'pendientes': reply = await handlePendientes(); break;
+      case 'pedidos':    reply = await handlePedidos(); break;
+      case 'pagar':      reply = await handlePagar(parsed); break;
+      case 'enviar':     reply = await handleEnviar(parsed); break;
       case 'anular':     reply = await handleAnular(); break;
       case 'error':      reply = `❌ ${parsed.msg}`; break;
       default: reply = `🤔 No entendí. Escribe *ayuda* para ver los comandos.`;

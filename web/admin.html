@@ -158,13 +158,19 @@
                         <div class="sub-value" title="Ganancia potencial si se vende todo">Proyección Ganancia: <b id="stat-inv-prof">$0</b></div>
                     </div>
                     <div class="stat-card profit">
-                        <h4>💎 Ganancia Neta Ventas</h4>
+                        <h4>💎 Ganancia Bruta Ventas</h4>
                         <div class="value" id="stat-profit">$0</div>
-                        <div class="sub-value">Ventas puras - Costo de producto</div>
+                        <div class="sub-value">Ventas - Costo de producto (sin gastos op.)</div>
                     </div>
                     <div class="stat-card expense">
-                        <h4>📉 Gastos Totales</h4>
+                        <h4>📉 Gastos Operacionales</h4>
                         <div class="value" id="stat-expense">$0</div>
+                        <div class="sub-value">Envíos, empaques, publicidad, comisiones</div>
+                    </div>
+                    <div class="stat-card" style="border-left-color:#6f42c1">
+                        <h4>🏆 Ganancia Real</h4>
+                        <div class="value" id="stat-real-profit" style="color:#6f42c1">$0</div>
+                        <div class="sub-value">Ganancia bruta - Todos los gastos</div>
                     </div>
                 </div>
 
@@ -440,9 +446,14 @@
                 </tr>`;
             });
 
+            const gananciaBruta = inVentas - gCostoVentas;
+            const gananciaReal = gananciaBruta - totalOut;
             document.getElementById('stat-caja').innerText = formatter.format(totalIn - totalOut);
-            document.getElementById('stat-profit').innerText = formatter.format(inVentas - gCostoVentas);
+            document.getElementById('stat-profit').innerText = formatter.format(gananciaBruta);
             document.getElementById('stat-expense').innerText = formatter.format(totalOut);
+            const realEl = document.getElementById('stat-real-profit');
+            realEl.innerText = formatter.format(gananciaReal);
+            realEl.style.color = gananciaReal >= 0 ? '#6f42c1' : '#dc3545';
             
             drawChart(mData);
         }

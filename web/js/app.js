@@ -186,6 +186,17 @@ document.addEventListener('DOMContentLoaded', () => {
             renderProducts(allProducts);
         });
 
+    // Real-time: actualiza stock cuando cambia un producto
+    db.channel('stock-live')
+        .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'productos' }, (payload) => {
+            const idx = allProducts.findIndex(p => p.id === payload.new.id);
+            if (idx !== -1) {
+                allProducts[idx] = payload.new;
+                renderProducts(allProducts);
+            }
+        })
+        .subscribe();
+
     // Modal close
     const modal = document.getElementById('productModal');
     document.getElementById('closeModal').onclick = () => { modal.style.display = 'none'; };
