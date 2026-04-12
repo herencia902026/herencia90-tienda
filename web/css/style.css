@@ -1274,3 +1274,77 @@ body.grid-single .product-grid-inner {
     /* Footer en móvil */
     .footer { margin-top: 20px; }
 }
+
+/* ─── PRE-PEDIDO WIZARD ──────────────────────────────────── */
+.pp-tipo-btn, .pp-talla-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 11px 10px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    text-align: center;
+}
+.pp-tipo-btn:hover, .pp-talla-btn:hover {
+    border-color: var(--gold-dark);
+    color: #fff;
+}
+.pp-tipo-btn.pp-selected, .pp-talla-btn.pp-selected {
+    background: rgba(217,195,145,0.12);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+.pp-slide { animation: ppSlideIn 0.3s ease; }
+@keyframes ppSlideIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+.pp-nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(217,195,145,0.08);
+    border: 1px solid rgba(217,195,145,0.3);
+    color: var(--gold);
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+.pp-nav-pill:hover {
+    background: rgba(217,195,145,0.16);
+    transform: translateY(-1px);
+}
+.btn-hero-pp {
+    display: inline-block;
+    padding: 15px 36px;
+    background: rgba(217,195,145,0.1);
+    color: var(--gold);
+    border: 2px solid rgba(217,195,145,0.4);
+    border-radius: 30px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.btn-hero-pp:hover {
+    background: rgba(217,195,145,0.2);
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(217,195,145,0.25);
+    transform: translateY(-3px);
+}
+@media (max-width: 600px) {
+    .btn-hero-pp { padding: 12px 28px; font-size: 0.82rem; }
+}
